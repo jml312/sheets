@@ -1,15 +1,26 @@
 import Sheet from "components/Sheet";
-import ActionsButton from "components/ActionsButton";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { db } from "firebaseConfig";
-import { collection, getDocs, getDoc, doc } from "firebase/firestore/lite";
+import { getDoc, doc } from "firebase/firestore/lite";
 import { SheetSizeState } from "store/SheetSizeState";
 import { CellValueState } from "store/CellValueState";
 import { useRouter } from "next/router";
 import { useRecoilCallback, useSetRecoilState } from "recoil";
+import { AiFillHome } from "react-icons/ai";
+import { VscGraphLine } from "react-icons/vsc";
+import { FaInfoCircle } from "react-icons/fa";
+import { FaSave } from "react-icons/fa";
+import HomeModal from "components/modals/HomeModal";
+import GraphModal from "components/modals/GraphModal";
+import InstructionsModal from "components/modals/InstructionsModal";
+import SaveModal from "components/modals/SaveModal";
 
 export default function SheetPage({ sheet, slug }) {
+  const [isHomeModalOpen, setIsHomeModalOpen] = useState(false);
+  const [isGraphModalOpen, setIsGraphModalOpen] = useState(false);
+  const [isInstructionsModalOpen, setIsInstructionsModalOpen] = useState(false);
+  const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
   const router = useRouter();
   const setSheetSize = useSetRecoilState(SheetSizeState);
   const unSlugify = (msg) => {
@@ -72,8 +83,66 @@ export default function SheetPage({ sheet, slug }) {
           href="https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_spreadsheet_x16.png"
         />
       </Head>
-      <Sheet />
-      <ActionsButton slug={slug} />
+      <div
+        className={
+          "w-auto flex flex-col lg:flex-row justify-around items-center bg-[rgba(255,255,255,0.1)]"
+        }
+      >
+        <Sheet />
+        <div
+          className={
+            "flex flex-col justify-center items-end gap-10 text-xl text-[#F5F5F5] h-screen lg:ml-[50vw]"
+          }
+        >
+          <button
+            className={
+              "flex justify-evenly items-center bg-gray-900 rounded-lg flex-center py-3 px-10 hover:bg-gray-800 transition-all ease-in-out"
+            }
+            onClick={() => setIsInstructionsModalOpen(true)}
+          >
+            <FaInfoCircle />
+            &nbsp; Details
+          </button>
+          <button
+            className={
+              "flex justify-evenly items-center bg-gray-900 rounded-lg flex-center py-3 px-10 hover:bg-gray-800 transition-all ease-in-out"
+            }
+            onClick={() => setIsHomeModalOpen(true)}
+          >
+            <AiFillHome />
+            &nbsp; Go Home
+          </button>
+          <button
+            className={
+              "flex justify-evenly items-center bg-gray-900 rounded-lg flex-center py-3 px-10 hover:bg-gray-800 transition-all ease-in-out"
+            }
+            onClick={() => setIsGraphModalOpen(true)}
+          >
+            <VscGraphLine className="stroke-1" />
+            &nbsp; Line Graph
+          </button>
+          <button
+            className={
+              "flex justify-evenly items-center bg-gray-900 rounded-lg flex-center py-3 px-10 hover:bg-gray-800 transition-all ease-in-out"
+            }
+            onClick={() => setIsSavedModalOpen(true)}
+          >
+            <FaSave />
+            &nbsp; Save Sheet
+          </button>
+        </div>
+      </div>
+      <HomeModal isOpen={isHomeModalOpen} setIsOpen={setIsHomeModalOpen} />
+      <GraphModal isOpen={isGraphModalOpen} setIsOpen={setIsGraphModalOpen} />
+      <InstructionsModal
+        isOpen={isInstructionsModalOpen}
+        setIsOpen={setIsInstructionsModalOpen}
+      />
+      <SaveModal
+        isOpen={isSavedModalOpen}
+        setIsOpen={setIsSavedModalOpen}
+        slug={slug}
+      />
     </>
   );
 }

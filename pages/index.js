@@ -38,15 +38,15 @@ export default function Index() {
         />
       </Head>
       {loading ? (
-        <div className="flex-center flex-col min-h-screen gap-4">
+        <div className="flex-col min-h-screen gap-4 flex-center bg-[rgba(255,255,255,0.1)]">
           <h1 className="text-xl font-bold">Loading Sheet</h1>
-          <div className=" flex justify-center items-center" />
-          <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-32 w-32"></div>
+          <div className="flex items-center justify-center " />
+          <div className="w-32 h-32 ease-linear border-8 border-t-8 border-gray-200 rounded-full loader"></div>
         </div>
       ) : (
-        <div className="flex-center flex-col min-h-screen">
+        <div className="flex-center flex-col min-h-screen bg-[#F5F5F5]">
           <div className="flex-center flex-col gap-4 absolute top-[10%]">
-            <h1 className="text-4xl font-bold mb-6">Sheets</h1>
+            <h1 className="mb-6 text-4xl font-bold">Sheets</h1>
             <button
               onClick={() => {
                 const slug = generateSlug();
@@ -54,13 +54,13 @@ export default function Index() {
                 router.push(`/${slug}`);
                 setLoading(true);
               }}
-              className="text-xl bg-green-400 rounded-lg flex-center gap-2 p-3 hover:bg-green-500 transition-all ease-in-out"
+              className="gap-2 p-3 text-xl transition-all ease-in-out bg-green-400 rounded-lg flex-center hover:bg-green-500"
             >
               <AiOutlinePlus />
               New Sheet
             </button>
             <br />
-            <h2 className="text-xl mb-1">Saved Sheets:</h2>
+            <h2 className="mb-1 text-xl">Saved Sheets:</h2>
             <div className="grid grid-cols-2 gap-2 sm:gap-8">
               {sheets
                 .sort((a, b) => new Date(b.lastEdited) - new Date(a.lastEdited))
@@ -78,7 +78,7 @@ export default function Index() {
                           Last Edited:{" "}
                           {new Date(lastEdited).toLocaleDateString("en-US")}
                         </p>
-                        <BiSpreadsheet className="absolute right-3 bottom-3 text-xl" />
+                        <BiSpreadsheet className="absolute text-xl right-3 bottom-3" />
                       </div>
                     </a>
                   </Link>

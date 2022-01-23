@@ -22,8 +22,8 @@ function Sheet() {
   }, [sheetSize.width, sheetSize.height]);
 
   return (
-    <div className="absolute top-0 bg-white dark:bg-black">
-      <table className="bg-white dark:bg-black">
+    <div className="relative left-0 self-start bg-[rgba(255,255,255,0.1)] lg:absolute">
+      <table className="bg-[rgba(255,255,255,0.1)] dark:bg-black">
         <tbody>
           <Row>
             {[...Array(numberOfColumns + 1)].map((_, columnIndex) =>
